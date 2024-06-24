@@ -1,16 +1,16 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { CdkCognitoProject } from "./resources/cognito";
+import { CdkDynamodb } from "./resources/dynamodb";
 
 export class AwsCdkDynamodbCognitoCicdStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'AwsCdkDynamodbCognitoCicdQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new CdkCognitoProject(
+      this,
+      "CdkCognitoProject",
+      props?.stackName as string,
+    );
+    new CdkDynamodb(this, "CdkDynamoDB", props?.stackName as string);
   }
 }
